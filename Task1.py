@@ -1,25 +1,25 @@
 import time
 year = 1970
 exDays = 13 # кол-во високосных дней с 1970
-def numMonth(days):
+def numMonth(days): # функция, которая переводит кол-во дней, начиная с 1 января в дату (месяц, число), для текущего года.
     num = 0
     end = False
     while(not(end)):
-        if (num in [3, 5, 8, 10]):
+        if (num in [3, 5, 8, 10]):  # месяца, в которых 30 дней
             if(days <= 30):
                 end = True
             else:
                 days -= 30
                 num += 1
 
-        if (num in [0, 2, 4, 6, 7, 9, 11]):
+        if (num in [0, 2, 4, 6, 7, 9, 11]):  # месяца, в которых 31 день
             if (days <= 31):
                 end = True
             else:
                 days -= 31
                 num += 1
 
-        if (num == 1):
+        if (num == 1):  # февраль
             if (days <= 28):
                 end = True
             else:
