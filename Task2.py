@@ -8,6 +8,3 @@ for i in range(1, len(ar)):
 
 print(ar)
 print(m)
-
-
-
