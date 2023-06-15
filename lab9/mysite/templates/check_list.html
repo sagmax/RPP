@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ {% if request.user.is_authenticated %}
+<h2>Отчеты</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Наименование светофора</th>
+        <th>Регион</th>
+        <th>Дата и время включения</th>
+        <th>Количество проехавших машин</th>
+        {% if request.user.is_staff == True %}
+        <th>Действие</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for check in checks %}
+    <tr>
+        <td>{{ check.id }}</td>
+        <td>{{ check.cashier.name }}</td>
+        <td>{{ check.store.name }}</td>
+        <td>{{ check.date_time|date:'Y-m-d H:i' }}</td>
+        <td>{{ check.total_sum }}</td>
+        {% if request.user.is_staff == True %}
+        <td>
+            <a class="btn" href="{% url 'check_update' check.pk %}">Изменить</a>
+            <a class="btn" href="{% url 'check_delete' check.pk %}">Удалить</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">Таблица пустая</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<hr>
+{% if request.user.is_staff == True %}
+<h3>Добавить новый отчет</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+{% endif %}
+{% else %}
+    <h1>Вы не авторизованы!</h1>
+    {% endif %}
+{% endblock %}
+
